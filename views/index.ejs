@@ -1,11 +1,79 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<% include ./partials/head %>
+<% include ./partials/nav %>
+<body >
+   <div class="parallax-container">
+      <div class="parallax"><img src="images/background.jpg"></div>
+   </div>
+   <div class="section white">
+      <div class="row container">
+         <h2 class="header">BUZZY</h2>
+         <div class="row">
+            <form class="col s12">
+               <div class="row">
+                  <div class="input-field col s6">
+                     <input id="enteredAddress" type="text" class="validate">
+                     <label for="enteredAddress">Enter your address</label>
+                  </div>
+                  <div class="input-field col s6">
+                     <a class="waves-effect waves-light btn-large" id="getAddress"> or Click here to get your location</a>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="input-field col s6">
+                     Enter Start date<input type="datetime-local" id="StartDate" class=" inline datepicker">
+                  </div>
+                  <div class="input-field col s6">
+                     Enter End date<input type="datetime-local" id="EndDate" class=" inline datepicker">
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="input-field col s6">
+                     <select multiple>
+                        <option value="" disabled selected>Choose your borough</option>
+                        <option value="Bk">Brooklyn</option>
+                        <option value="Bx">The Bronx</option>
+                        <option value="Mn">Manhattan</option>
+                        <option value="SI">Staten Island</option>
+                        <option value="Qn">Queens</option>
+                        <option value="Ot">donot know yet</option>
+                     </select>
+                     <label>Boroughs</label>
+                  </div>
+                  <div class="input-field col s6">
+                     <select multiple>
+                        <option value="" disabled selected>Choose your borough</option>
+                        <option value="Athletic">Athletic</option>
+                        <option value="Business & Finance">Business &amp; Finance</option>
+                        <option value="City Government Office">City Government Office</option>
+                        <option value="Cultural">Cultural</option>
+                        <option value="Education">Education</option>
+                        <option value="Environment">Environment</option>
+                        <option value="Featured">Featured</option>
+                        <option value="Free">Free</option>
+                        <option value="General Events">General Events</option>
+                        <option value="Health & Public Safety">Health &amp; Public Safety</option>
+                        <option value="Hearings and Meetings">Hearings and Meetings</option>
+                        <option value="Holidays">Holidays</option>
+                        <option value="Kids and Family">Kids and Family</option>
+                        <option value="Parks & Recreation">Parks &amp; Recreation</option>
+                        <option value="Street and Neighborhood">Street and Neighborhood</option>
+                        <option value="Tours">Tours</option>
+                        <option value="Volunteer">Volunteer</option>
+                     </select>
+                     <label>Category</label>
+                  </div>
+               </div>
+               <input class="waves-effect waves-light btn-large" type="submit" value="Submit">     
+            </form>
+         </div>
+      </div>
+   </div>
+   </div>
+   </div>
+   </div>
+   <div class="parallax-container">
+      <div class="parallax"><img src="images/CvFeXKY.jpg"></div>
+   </div>
+   <% include ./partials/scripts %>
+</body>
 </html>

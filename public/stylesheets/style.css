@@ -6,3 +6,11 @@ a {
   color: #00B7FF; }
 
 /*# sourceMappingURL=style.css.map */
+
+body{
+	margin: 0 auto;
+	background: url("/images/background.jpg");
+}
+
+.parallax-container {
+      height: 300px;
