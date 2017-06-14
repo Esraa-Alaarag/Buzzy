@@ -48,11 +48,14 @@ console.log(queryString)
 // });
 // console.log(arr);
 // });
-$('#mainForm').on('submit', function() {
-	event.preventDefault();
-var formData = $('#mainForm').serialize()
 
-console.log(formData)
+
+$(document).ready(function(){
+  $("#mainForm").submit(function(event){
+    event.preventDefault();
+    var name = $("input[name='name']",this).val();
+    var email = $("input[name='email']",this).val();
+  });
 });
 
 
