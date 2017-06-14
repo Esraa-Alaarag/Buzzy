@@ -39,6 +39,21 @@ var queryString = $('#mainForm').serialize();
 console.log(queryString)
 
 
+// works
+// $('#mainForm').on('submit', function() {
+// 	event.preventDefault();
+//     var arr = new Array();
+// $(':input').each(function() {
+//  arr.push($(this).val());
+// });
+// console.log(arr);
+// });
+$('#mainForm').on('submit', function() {
+	event.preventDefault();
+var formData = $('#mainForm').serialize()
+
+console.log(formData)
+});
 
 
 
