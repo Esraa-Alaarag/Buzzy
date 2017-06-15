@@ -11,19 +11,19 @@
 
             <form id="mainForm" class="col s12">
                <div class="row">
-                  <div class="input-field col s6">
-                     Enter your address<input id="enteredAddress" type="text" class="validate">
+                  <div class="input-field col s6 btnToLoad">
+                     Enter your address<input id="enteredAddress" type="text" class="validate ">
                   </div>
-                  <div class="input-field col s6">
-                     <a class="waves-effect waves-light btn-large" id="getAddress"> or Click here to get your location</a>
+                  <div class="input-field col s6 button">
+                     <a class="waves-effect waves-light btn-large " id="getAddress"> or Click here to get your location</a>
                   </div>
                </div>
                <div class="row">
                   <div class="input-field col s6">
-                     Enter Start date<input type="datetime-local" id="StartDate" class=" inline datepicker">
+                     from<input type="date" id="StartDate" class=" inline datepicker">
                   </div>
                   <div class="input-field col s6">
-                     Enter End date<input type="datetime-local" id="EndDate" class=" inline datepicker">
+                     To<input type="date" id="EndDate" class=" inline datepicker">
                   </div>
                </div>
                <div class="row">
@@ -63,7 +63,14 @@
                      <label>Category</label>
                   </div>
                </div>
-               <input class="waves-effect waves-light btn-large" type="submit" value="Submit">     
+               <div class="row">
+                  <div class="input-field col s6">
+                     <input class="waves-effect waves-light btn-large" type="submit" value="Submit"> 
+                  </div>
+                  <div class="input-field col s6">
+                     <input class="waves-effect waves-light btn-large" type="reset" value="Reset">
+                  </div>
+               </div>
             </form>
          </div>
       </div>

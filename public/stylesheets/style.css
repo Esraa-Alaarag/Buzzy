@@ -9,8 +9,13 @@ a {
 
 body{
 	margin: 0 auto;
-	background: url("/images/background.jpg");
+	background: gray;
 }
 
 .parallax-container {
       height: 300px;
+}
+.loading{
+	height: 50px;
+	width: 50px;
+}
