@@ -1,6 +1,7 @@
 <% include ./partials/head %>
 <% include ./partials/nav %>
-<body >
+<body>
+
    <div class="parallax-container">
       <div class="parallax"><img src="images/background.jpg"></div>
    </div>
@@ -8,70 +9,61 @@
       <div class="row container">
          <h2 class="header">BUZZY</h2>
          <div class="row">
-
-            <form id="mainForm" class="col s12">
-               <div class="row">
-                  <div class="input-field col s6 btnToLoad">
+            <form id="mainForm" class="col s6">
+                  <div class="input-field col s12 btnToLoad">
                      Enter your address<input id="enteredAddress" type="text" class="validate ">
                   </div>
-                  <div class="input-field col s6 button">
-                     <a class="waves-effect waves-light btn-large " id="getAddress"> or Click here to get your location</a>
+                  <div class="input-field col s12 button">
+                     <a class="waves-effect waves-light btn-large " id="getAddress"> Use my location</a>
                   </div>
-               </div>
-               <div class="row">
-                  <div class="input-field col s6">
+                  <div class="input-field col s12">
                      from<input type="date" id="StartDate" class=" inline datepicker">
                   </div>
-                  <div class="input-field col s6">
+                  <div class="input-field col s12">
                      To<input type="date" id="EndDate" class=" inline datepicker">
                   </div>
-               </div>
-               <div class="row">
-                  <div class="input-field col s6">
-                     <select multiple id="borough" name="borough">
-                        <option value="" disabled selected>Choose your borough</option>
-                        <option value="Bk">Brooklyn</option>
-                        <option value="Bx">The Bronx</option>
-                        <option value="Mn">Manhattan</option>
-                        <option value="SI">Staten Island</option>
-                        <option value="Qn">Queens</option>
-                        <option value="Ot">donot know yet</option>
-                     </select>
-                     <label>Boroughs</label>
-                  </div>
-                  <div class="input-field col s6">
+                  <div class="input-field col s12">
                      <select multiple id="Category" name="Category">
                         <option value="" disabled selected>Pick your Categories</option>
-                        <option value="Athletic">Athletic</option>
-                        <option value="Business & Finance">Business &amp; Finance</option>
-                        <option value="City Government Office">City Government Office</option>
-                        <option value="Cultural">Cultural</option>
-                        <option value="Education">Education</option>
-                        <option value="Environment">Environment</option>
-                        <option value="Featured">Featured</option>
+                        <option value="music">Concerts &amp; Tour Dates</option>
+                        <option value="conference">Conferences &amp; Tradeshows</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="learning_education">Education</option>
+                        <option value="family_fun_kids">Kids &amp; Family</option>
+                        <option value="festivals_parades">Festivals</option>
+                        <option value="movies_film">Film</option>
                         <option value="Free">Free</option>
-                        <option value="General+Events">General Events</option>
-                        <option value="Health+Public+Safety">Health &amp; Public Safety</option>
-                        <option value="Hearings+Meetings">Hearings and Meetings</option>
-                        <option value="Holidays">Holidays</option>
-                        <option value="Kids+Family">Kids &amp; Family</option>
-                        <option value="Parks+Recreation">Parks &amp; Recreation</option>
-                        <option value="Street+Neighborhood">Street &amp; Neighborhood</option>
-                        <option value="Tours">Tours</option>
+                        <option value="food">Food &amp; Wine</option>
+                        <option value="fundraisers">Fundraising &amp; Charity</option>
+                        <option value="art">Art Galleries &amp; Exhibits</option>
+                        <option value="support">Health &amp; Wellness</option>
+                        <option value="books">Literary &amp; Books</option>
+                        <option value="attractions">Museums &amp; Attractions</option>
+                        <option value="community">Business &amp; Networking</option>
+                        <option value="singles_social">Nightlife &amp; Singles</option>
+                        <option value="alumni">University &amp; Alumni</option>
+                        <option value="clubs_associations">Organizations &amp; Meetups</option>
+                        <option value="outdoors_recreation">Outdoors &amp; Recreation</option>
+                        <option value="performing_arts">Performing Arts</option>
                         <option value="Volunteer">Volunteer</option>
+                        <option value="animals">Pets</option>
+                        <option value="politics_activism">Politics &amp; Activism</option>
+                        <option value="sales">Sales &amp; Retail</option>
+                        <option value="science">Science</option>
+                        <option value="religion_spirituality">Religion &amp; Spirituality</option>
+                        <option value="sports">Sports</option>
+                        <option value="Tours">Tours</option>
+                        <option value="technology">Technology</option>
                      </select>
                      <label>Category</label>
                   </div>
-               </div>
-               <div class="row">
-                  <div class="input-field col s6">
+                  <div class="input-field col s12">
                      <input class="waves-effect waves-light btn-large" type="submit" value="Submit"> 
-                  </div>
-                  <div class="input-field col s6">
-                     <input class="waves-effect waves-light btn-large" type="reset" value="Reset">
-                  </div>
                </div>
             </form>
+         <div class="col s6">
+            <div id="googleMap" style="width:100%;height:400px;"></div>
+         </div> 
          </div>
       </div>
    </div>
