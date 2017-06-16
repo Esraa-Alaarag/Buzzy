@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 var sassMiddleware = require('node-sass-middleware');
 
 var index = require('./routes/index');
-var result = require('./routes/result');
 var MyEvents = require('./routes/MyEvents');
 var users = require('./routes/users');
 
@@ -34,7 +33,6 @@ app.use(sassMiddleware({
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/result', result);
 app.use('/MyEvents', MyEvents);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

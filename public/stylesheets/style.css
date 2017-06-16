@@ -18,4 +18,11 @@ body{
 .loading{
 	height: 50px;
 	width: 50px;
+  
+}
+.button{
+  text-align: center;
+}
+.transparent{
+  height: 50px;
 }

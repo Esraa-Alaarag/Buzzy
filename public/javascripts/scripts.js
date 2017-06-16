@@ -1,3 +1,4 @@
+
 var isitclicked = false;
 
 function mapInitialize() {
@@ -72,7 +73,7 @@ $('#mainForm').on('submit', function () {
     var startDate = userPref[1];
     //console.log(startDate);
     var endDate = userPref[2];
-    startDate ? FormatDate(startDate) : ""
+    startDate ? FormatDate(startDate) : today();
     endDate ? FormatDate(endDate) : ""
     var searchdate ;
     startDate? searchdate = startDate + "-" + endDate : searchdate=" "
@@ -90,7 +91,6 @@ $('#mainForm').on('submit', function () {
 
 function FormatDate(date) {
     date = date.split("-")
-    console.log(date);
     var Day = date[2];
     var Month = date[1];
     var Year = date[0];
@@ -131,7 +131,7 @@ function FormatDate(date) {
 // }
 
 function getevents(date, Category) {
-    var location
+    var location ,title,start_time,stop_time,url,address,vname,description,latitude,longitude;
     latlng.lat?location = `${latlng.lat},${latlng.lng}`: location= "new york";
      
     var oArgs = {
@@ -140,9 +140,9 @@ function getevents(date, Category) {
 
         location: location || "new york",
 
-        within: 25,
+        within: 10,
 
-        date:  date || " ",
+        date:  date || "2011-10-26 00:00:00",
 
         page_size: 10,
 
@@ -153,19 +153,42 @@ function getevents(date, Category) {
     console.log(oArgs);
     // EVDB.API.call("/categories/list", oArgs, function(oData) {
     EVDB.API.call("/events/search", oArgs, function (oData) {
-
-        console.log(oData);
+        var obj=oData.events.event
+        console.log(obj);
         var events = " ";
-
-
-        for (var i = 0; i < 10; i++) {
-
-
-            events += `<div class="section white">
-            <p>Event's name:${oData.events.event[i].title}</p>
-            <p>Event website: <a target="_blank" href=${oData.events.event[i].url}>Click here</a></p>
-            `
-        }
+        obj.forEach( function (arrayItem,i)
+        { 
+            arrayItem.title? title = arrayItem.title : title=false;
+            arrayItem.start_time? startDate = arrayItem.start_time : startDate =false;
+            arrayItem.stop_time?stopDate = arrayItem.stop_time : stopDate =false
+            arrayItem.url?url=arrayItem.url: url=false
+            arrayItem.venue_address?address=arrayItem.venue_address:address=false
+            arrayItem.image?image=arrayItem.image:image=false;
+            arrayItem.venue_name?vname=arrayItem.venue_name:vname=false
+            arrayItem.description?description=arrayItem.description:description=false
+            arrayItem.latitude?latitude=arrayItem.latitude:latitude=false
+            arrayItem.longitude?longitude=arrayItem.longitude:longitude=false
+            if(startDate!==false && stopDate!==false){
+            console.log(i);
+            console.log(title) ;
+            console.log(startDate);
+            console.log(stopDate);
+            console.log(url);
+            console.log(address);
+            console.log(vname);
+            console.log(description);
+            console.log(latitude);
+            console.log(longitude);
+            events+=`<div class='section white'><h5>${i}.${title}.</h5>
+                    <p>From: ${startDate}</br>
+                        To: ${stopDate}</br>
+                    Url: <a href="${url}">Click here to visit the Event website</a></br>
+                    Address: ${address}</br>
+                    Venue name: ${vname}</br>
+                    Description: ${description}<br>
+                    <hr>
+                    </p></div><div class="transparent" ></div> `}
+        });
 
         document.getElementById("results").innerHTML = events;
 
@@ -211,3 +234,15 @@ function myMap(latitude, longitude, zoom) {
 
 };
 
+function today() {
+    var temp=""
+  var time = new Date();
+  var year = time.getYear();
+  var month = time.getMonth();
+  var day = time.getDate();
+  console.log(time , year,month,day);
+  temp += 1900+year+"-";
+  temp += month+1+"-";
+  temp += day+" 00:00:00";
+  return temp;
+}

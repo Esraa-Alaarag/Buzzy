@@ -17,15 +17,20 @@
                      <a class="waves-effect waves-light btn-large " id="getAddress"> Use my location</a>
                   </div>
                   <div class="input-field col s12">
-                     from<input type="date" id="StartDate" class=" inline datepicker">
+                     From<input type="date" id="StartDate" class=" inline datepicker">
                   </div>
                   <div class="input-field col s12">
                      To<input type="date" id="EndDate" class=" inline datepicker">
                   </div>
                   <div class="input-field col s12">
-                     <select multiple id="Category" name="Category">
+                     <select  id="Category" name="Category">
                         <option value="" disabled selected>Pick your Categories</option>
-                        <option value="music">Concerts &amp; Tour Dates</option>
+                        <option value="KZFzniwnSyZfZ7v7nJ">Music</option>
+                        <option value="KZFzniwnSyZfZ7v7nn">Film</option>
+                        <option value="KZFzniwnSyZfZ7v7nE">Sports</option>
+                        <option value="KZFzniwnSyZfZ7v7na">Arts &amp; Theatre</option>
+                        <option value="KZFzniwnSyZfZ7v7n1">Other</option>
+                        <!-- <option value="music">Concerts &amp; Tour Dates</option>
                         <option value="conference">Conferences &amp; Tradeshows</option>
                         <option value="comedy">Comedy</option>
                         <option value="learning_education">Education</option>
@@ -53,7 +58,7 @@
                         <option value="religion_spirituality">Religion &amp; Spirituality</option>
                         <option value="sports">Sports</option>
                         <option value="Tours">Tours</option>
-                        <option value="technology">Technology</option>
+                        <option value="technology">Technology</option> -->
                      </select>
                      <label>Category</label>
                   </div>
@@ -61,20 +66,17 @@
                      <input class="waves-effect waves-light btn-large" type="submit" value="Submit"> 
                </div>
             </form>
-         <div class="col s6">
-            <div id="googleMap" style="width:100%;height:400px;"></div>
-         </div> 
+            <div class="col s6">
+               <div id="googleMap" style="width:100%;height:400px;"></div>
+            </div> 
          </div>
       </div>
-   </div>
-   </div>
-   </div>
    </div>
    <div class="parallax-container">
       <div class="parallax"><img src="images/CvFeXKY.jpg"></div>
    </div>
    <div id="results">
-   <div>
+   </div>
    <% include ./partials/scripts %>
 </body>
 </html>
