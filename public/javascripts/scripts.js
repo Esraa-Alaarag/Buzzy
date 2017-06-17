@@ -78,9 +78,7 @@ $('.submit').on('click', function () {
     event.preventDefault();
     // get the dates values from input field
     var address= $("#enteredAddress").val();
-    if(!isitclicked){
-        getcoordinate(address);
-    }
+    
     var startDate = $("#StartDate").val();
     var endDate = $("#EndDate").val();
     // validate start and end dates
@@ -93,8 +91,10 @@ $('.submit').on('click', function () {
     // getting the required category from selection if not entered select music
     var categories = $("#Category").val();
     console.log(startDate,endDate, categories);
-    // calling the API for data
-    getevents(startDate,endDate, categories)
+    if(!isitclicked){
+        getcoordinate(address,startDate,endDate, categories);
+    }// calling the API for data
+    else getevents(startDate,endDate, categories)
 });
 
 // change the date format to the format that API requested
@@ -120,16 +120,16 @@ function today() {
     return temp;
 }
 
-function getcoordinate(address){
+function getcoordinate(address,startDate,endDate, categories){
     var map = new google.maps.Map(document.getElementById('googleMap'), {
           zoom: 8,
           center: {lat: 40.7400245, lng: -73.9897259}
         });
     var geocoder = new google.maps.Geocoder();
-    geocodeAddress(geocoder, map, address);
+    geocodeAddress(geocoder, map, address,startDate,endDate, categories);
 }
 
-function geocodeAddress(geocoder, resultsMap , address) {
+function geocodeAddress(geocoder, resultsMap , address,startDate,endDate, categories) {
     console.log(address);
     geocoder.geocode({'address': address}, function(results, status) {
       if (status === 'OK') {
@@ -144,10 +144,11 @@ function geocodeAddress(geocoder, resultsMap , address) {
         lng: results[0].geometry.viewport.b.b
         };
         latlonstring=latlng.lat + "," + latlng.lng;
-
+        getevents(startDate,endDate, categories)
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
+      
     });
     
   }
