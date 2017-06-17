@@ -312,7 +312,7 @@ console.log(event);
           $(`#card${i}`).effect( "shake" );
         });
 
-  marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+  marker.setIcon('https://maps.google.com/mapfiles/ms/icons/red-dot.png');
 
 }
 
