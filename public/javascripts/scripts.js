@@ -15,7 +15,7 @@ function mapInitialize() {
 $("#getAddress").click(getTheAddress)
 
 function getTheAddress() {
-    //$('#enteredAddress').val(" ")
+    $( "#enteredAddress" ).prop('disabled', true);
     //replace the btn with loading image
     $("#getAddress").replaceWith("<img class='loading' src='/images/loading.gif' alt='loading' />").fadeIn();
     //get the user IP address, upon success call a function to get lat and lng
@@ -92,7 +92,7 @@ $('.submit').on('click', function () {
     var categories = $("#Category").val();
     console.log(startDate,endDate, categories);
     if(!isitclicked){
-        getcoordinate(address,startDate,endDate, categories);
+        getcoordinate(address,startDate,endDate, categories)
     }// calling the API for data
     else getevents(startDate,endDate, categories)
 });
@@ -121,44 +121,31 @@ function today() {
 }
 
 function getcoordinate(address,startDate,endDate, categories){
-    var map = new google.maps.Map(document.getElementById('googleMap'), {
-          zoom: 8,
-          center: {lat: 40.7400245, lng: -73.9897259}
-        });
     var geocoder = new google.maps.Geocoder();
-    geocodeAddress(geocoder, map, address,startDate,endDate, categories);
-}
-
-function geocodeAddress(geocoder, resultsMap , address,startDate,endDate, categories) {
-    console.log(address);
     geocoder.geocode({'address': address}, function(results, status) {
-      if (status === 'OK') {
-        resultsMap.setCenter(results[0].geometry.location);
-        console.log(results[0]);
-        var marker = new google.maps.Marker({
-          map: resultsMap,
-          position: results[0].geometry.location
-        })
-        latlng = {
-        lat: results[0].geometry.viewport.f.b,
-        lng: results[0].geometry.viewport.b.b
-        };
-        latlonstring=latlng.lat + "," + latlng.lng;
-        getevents(startDate,endDate, categories)
-      } else {
-        alert('Geocode was not successful for the following reason: ' + status);
-      }
-      
+        if (status === 'OK') {
+            latlng = {
+            lat: results[0].geometry.viewport.f.b,
+            lng: results[0].geometry.viewport.b.b
+            };
+            latlonstring=latlng.lat + "," + latlng.lng;
+            getevents(startDate,endDate, categories)
+            } 
+        else{
+            swal({
+  title: "Oops...",
+  text: "This address is invalid Enter a valid address and try again.",
+  type: "error",
+  confirmButtonText: "Cool"
+});
+        }
     });
-    
-  }
+}
 
 function getevents(StartDate,EndDate,Category) {
     EndDate? EndDate=`&endDateTime=${EndDate}` : EndDate="";
     Category? Category=`&classificationId=${Category}` : Category="";
-    var e = document.getElementById("total");
     console.log("searched data",Category,EndDate,StartDate,latlonstring);
-     e.innerHTML=`https://app.ticketmaster.com/discovery/v2/events.json?apikey=QFYXssyZdIBdLhFpDQCE0p40bZxNM4Ib${Category}&latlong=${latlonstring}&startDateTime=${StartDate}${EndDate}&radius=10&unit=miles`
     $.ajax({
       type:"GET",
       url:`https://app.ticketmaster.com/discovery/v2/events.json?classificationId=${Category}&apikey=QFYXssyZdIBdLhFpDQCE0p40bZxNM4Ib&latlong=${latlonstring}&startDateTime=${StartDate}${EndDate}&radius=10&unit=miles`,
@@ -166,12 +153,18 @@ function getevents(StartDate,EndDate,Category) {
       dataType: "json",
       success: function(json) {
                   // console.log(json);
-                  var e = document.getElementById("total");
-                  e.innerHTML = json.page.totalElements + " events found.";
-                  if(json.page.totalElements>0){
+                var e = document.getElementById("result-title");
+                if(json.page.totalElements>0){
+                     $("#result-title").css('visibility', 'visible');
+                    e.innerHTML =  `<h5> ${json.page.totalElements} events were found.<h5>`;
                     showEvents(json);
                     initMap(latlng, json);
-               }},
+                    }
+                else
+                {
+                    e.innerHTML =  `<h5> Sorry , No event was found. Change the date or the category and try again. <h5>`;   
+                }
+           },
       error: function(xhr, status, err) {
                   console.log(err);
                }
@@ -191,27 +184,58 @@ function showEvents(json) {
     arrayItem._embedded.venues[0].city.name? city= arrayItem._embedded.venues[0].city.name : city=" "
     arrayItem._embedded.venues[0].country.countryCode? country=arrayItem._embedded.venues[0].country.countryCode : country=" "
     arrayItem._embedded.venues[0].postalCode?zip=arrayItem._embedded.venues[0].postalCode:zip=" "
+    arrayItem.priceRanges? max = arrayItem.priceRanges[0].max+" $ -" : max="Not specified"
+    arrayItem.priceRanges? min = arrayItem.priceRanges[0].min+" $" : min=""
+    arrayItem.info? info=arrayItem.info : info= "Not available"
+    if (genre==="Undefined")
+        genre=" ";
+    if (segment==="Undefined")
+        segment=" "
+    if (subGenre==="Undefined")
+        subGenre=" "
     $("#results").append(
-        `<div class="card  col s6">
+        `<div id=card${i} class="card  col s6">
+             <a target=_blank href=${arrayItem.url} class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">shopping_cart</i></a>
             <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator" src=${arrayItem.images[5].url}>
+            <img class="activator cardimage" src=${arrayItem.images[5].url}>
             </div>
             <div class="card-content">
             <span class="card-title  activator grey-text text-darken-4">${i+1}.${title}<i class="material-icons right">more_vert</i></span>
-            <p><a   target=_blank href=${arrayItem.url}>Click here</a></p>
             </div>
-                
-                <p>Date: ${arrayItem.dates.start.localDate}</br>
-                Time: ${arrayItem.dates.start.localTime}</br>
-                <div class="card-reveal">
+                <ul>
+                <li>Date: ${arrayItem.dates.start.localDate}</li>
+                <li>Time: ${arrayItem.dates.start.localTime}</li>
+                <li><iframe src="https://www.facebook.com/plugins/share_button.php?href=${arrayItem.url}&layout=button&size=large&mobile_iframe=true&width=73&height=28&appId" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe></li>
+                </ul>
+                <div class=" grey lighten-3 card-reveal">
                 <span class="card-title grey-text text-darken-4">${title}<i class="material-icons right">close</i></span>
-                <p>Address: ${street},${city},${zip}</br>
-                Description: ${arrayItem.description}<br>
-                Category:${genre},${segment},${subGenre}</p>
+                <table>
+                <tr>
+                <th>Address:</th>
+                <td>${street},${city},${zip}</td>
+                </tr>
+                <tr>
+                <th>Information:</th>
+                <td>${info}</td>
+                </tr>
+                <tr>
+                <th>Distance:</th>
+                <td>${arrayItem.distance} Mile</td>
+                </tr>
+                <tr>
+                <th>Price:</th>
+                <td>${max}${min}</td>
+                </tr>
+                <tr>
+                <th>Category:</th>
+                <td><div class="chip">${genre}</div><div class="chip">${segment}</div><div class="chip">${subGenre}</div></td>
+                </tr>
+                </table>
                 </div>
               </div> `)});
   
 }
+                // 
 
 
 
@@ -269,18 +293,24 @@ function initMap(position, json) {
   });
   json.page.totalElements>json.page.size? count=json.page.size : count=json.page.totalElements;
   for(var i=0; i<count; i++) {
-    addMarker(map, json._embedded.events[i]);
+    addMarker(map, json._embedded.events[i],i);
   }
     userlocation(map);
 }
 
-function addMarker(map, event) {
+function addMarker(map, event,i) {
 console.log(event);
   var marker = new google.maps.Marker({
     position: new google.maps.LatLng(event._embedded.venues[0].location.latitude, event._embedded.venues[0].location.longitude),
     animation: google.maps.Animation.DROP,
     map: map
   });
+  marker.addListener('click', function() {
+          map.setZoom(10);
+          map.setCenter(marker.getPosition());
+          window.location.href = `#card${i}`;
+          $(`#card${i}`).effect( "shake" );
+        });
 
   marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
 

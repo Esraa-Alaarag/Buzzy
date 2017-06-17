@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Kadwa:700');
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+   }
 
 a {
   color: #00B7FF; }
@@ -23,15 +24,17 @@ body{
 .button{
   text-align: center;
 }
-.transparent{
-  
-}
 
-.separator{
+
+/*.separator{
   height: 100px;
-}
+}*/
 .card-image{
   height: 50%;
+}
+.cardimage
+{
+  height: 100%; 
 }
 
 .card-title{
@@ -49,7 +52,7 @@ body{
     position: absolute;
 }
 p{
-  padding: 0 5%;
+  padding-left: 2%;
   line-height: 30px;
 }
 
@@ -57,9 +60,53 @@ p{
   width: 31%;
   height: 500px;
   overflow: scroll;
-  position: inline-block;
   float: left;
   margin: 1.16%;
   box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+
 }
 
+
+.btn-floating{
+z-index: 3;
+position: absolute;
+top: 5;
+left:5;
+}
+#result-title{
+  padding-left: 3%;
+  visibility: hidden;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.header {  
+  /* This section calls the slideInFromLeft animation we defined above */
+  animation: 1s ease-out 0s 1 slideInFromLeft;
+  padding: 30px;
+}
+
+/* Added for aesthetics */ 
+h1 {
+/*  font-weight: 600;
+  font-family: 'Kadwa', serif;*/
+  color: #fff;
+font-size: 12em;
+font-weight: bold;
+font-family: Helvetica;
+text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+  text-align: center;
+  } 
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+input[type="text"]:disabled{color: black}

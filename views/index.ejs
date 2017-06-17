@@ -1,10 +1,9 @@
 <% include ./partials/head %>
 <% include ./partials/nav %>
 <body>
-
    <div class="parallax-container">
       <div class="parallax"><img src="images/background.jpg"></div>
-      <div><h2 class=" header">BUZZY</h2></div>
+      <div ><h1 class=" grey-text text-lighten-5 header">BUZZY</h1></div>
       
    </div>
    <div class="section white">
@@ -13,16 +12,16 @@
             <form id="mainForm" class="col s12">
                <div class="row container col s12">
                   <div class="input-field col s6 btnToLoad">
-                     Enter your address
+                     Enter an address
                      <input required id="enteredAddress" type="text" class="validate ">
                      <div class="input-field button">
-                        <a class="waves-effect waves-light btn-large " id="getAddress"> Use my location</a>
+                        <a class="waves-effect waves-light btn-large " id="getAddress"> Use my current location</a>
                      </div>
                   </div>
                   <div class="input-field col s6">
                      Category
                      <select  id="Category" name="Category">
-                        <option value="" disabled selected>Pick your Categories</option>
+                        <option value="" disabled selected>Pick Category</option>
                         <option value="KZFzniwnSyZfZ7v7nJ">Music</option>
                         <option value="KZFzniwnSyZfZ7v7nn">Film</option>
                         <option value="KZFzniwnSyZfZ7v7nE">Sports</option>
@@ -32,23 +31,20 @@
                   </div>
                </div>
                <div class="row container col s12">
-                  <div class="input-field col s6">
+                  <div class="input-field col s4">
                      From<input type="date" id="StartDate" class=" inline datepicker">
                   </div>
-                  <div class="input-field col s6">
+                  <div class="input-field col s4">
                      To<input type="date" id="EndDate" class=" inline datepicker">
                   </div>
-               </div>
-               <div class="row container col s12">
-                  <div class="input-field col s6">
-                  </div>
-                  <div class="input-field col s6">
+                  <div class="input-field col s4">
                      <div class="input-field button submit">
-                     <input class="waves-effect waves-light btn-large" type="submit" value="Submit"> 
+                        <button class="btn-large waves-effect waves-light" type="submit" name="action">Submit  
+                        <i class="material-icons right">send</i>
+                        </button>
+                     </div>
                   </div>
-                  </div>
-               </div>
-                  
+               </div>    
             </form>
          </div>
       </div>
@@ -62,11 +58,13 @@
    <div class="parallax-container separator">
       <div class="parallax"><img src="images/bridge.jpg"></div>
    <div class="col s12" id="total"></div>
+
    </div>
-   
-   <div class="section cardcont white">
+   <div id="result-title" class="section white"></div>
+   <div class=" cardcont white">
    <dt class="col s12" id="results"></dt>
    </div>
    <% include ./partials/scripts %>
+   <% include ./partials/footer %>
 </body>
 </html>
