@@ -4,7 +4,7 @@ var db = require('../public/javascripts/queries')
 
 /* GET home page. */
 router.get('/', db.getAllEvents); 
-router.delete('/:ss', db.removeEvent);
+router.delete('/:id', db.removeEvent);
 
 
 module.exports = router;

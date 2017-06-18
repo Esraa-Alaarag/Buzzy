@@ -80,13 +80,32 @@ p{
 .fixed-action-btn{
 z-index: 3;
 position: absolute;
-margin: 10px;
 }
 #result-title{
   padding-left: 3%;
   margin-top: 0;
   margin-bottom: 0;
 }
+.tableimage{
+  height: 100px;
+  width: 100px;
+}
+h6{
+  font-weight: 800;
+}
+
+th{
+  text-align: center;
+}
+td{
+  white-space: pre-wrap; 
+  max-width: 100px
+}
+th{
+  white-space: pre-wrap; 
+  max-width: 100px
+}
+
 
 .header {  
   /* This section calls the slideInFromLeft animation we defined above */
@@ -115,3 +134,4 @@ text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px
 }
 
 input[type="text"]:disabled{color: black}
+

@@ -196,13 +196,15 @@ function showEvents(json) {
     arrayItem.classifications[0].genre? genre=arrayItem.classifications[0].genre.name : genre=" ";
     arrayItem.classifications[0].segment?segment=arrayItem.classifications[0].segment.name: segment=" ";
     arrayItem.classifications[0].subGenre?subGenre=arrayItem.classifications[0].subGenre.name:subGenre=" ";
-    arrayItem._embedded.venues[0].address.line1? street=arrayItem._embedded.venues[0].address.line1 : street=" "
+    arrayItem._embedded.venues[0].address? street=arrayItem._embedded.venues[0].address.line1 : street=" "
     arrayItem._embedded.venues[0].city.name? city= arrayItem._embedded.venues[0].city.name : city=" "
     arrayItem._embedded.venues[0].country.countryCode? country=arrayItem._embedded.venues[0].country.countryCode : country=" "
     arrayItem._embedded.venues[0].postalCode?zip=arrayItem._embedded.venues[0].postalCode:zip=" "
     arrayItem.priceRanges? max = arrayItem.priceRanges[0].max+" $ -" : max="Not specified"
     arrayItem.priceRanges? min = arrayItem.priceRanges[0].min+" $" : min=""
     arrayItem.info? info=arrayItem.info : info= "Not available"
+    arrayItem.dates.start.localTime? time=arrayItem.dates.start.localTime : time ="Not specified"
+    arrayItem.dates.start.localDate? date=arrayItem.dates.start.localDate: date="Not specified"
     var id=arrayItem.id;
     if (genre==="Undefined")
         genre=" ";
@@ -211,14 +213,14 @@ function showEvents(json) {
     if (subGenre==="Undefined")
         subGenre=" "
     $("#results").append(
-        `<div id=card${i} class="card z-depth-5 col s6">
-            <div class="fixed-action-btn click-to-toggle horizontal">
-                <a class="btn-floating btn-large pulse red">
+        `<div id=card${i} class="card hoverable z-depth-5 col s6">
+            <div class="fixed-action-btn   horizontal">
+                <a class="btn-floating  btn-large pulse red">
                     <i class="large material-icons">shop</i>
                 </a>
                 <ul>
-                  <li><a class="btn-floating  teal lighten-2 " target="_blank" href=${arrayItem.url} ><i class="material-icons">shopping_cart</i></a></li>
-                  <li><a class="btn-floating  teal lighten-2 "><i class="material-icons info_${id}" id ="saveEvent" >playlist_add</i></a></li>
+                  <li><a class="btn-floating waves-effect waves-light teal lighten-2 " target="_blank" href=${arrayItem.url} ><i class="material-icons">shopping_cart</i></a></li>
+                  <li><a class="btn-floating waves-effect waves-light teal lighten-2 "><i class="material-icons info_${id}" id ="saveEvent" >playlist_add</i></a></li>
                 </ul>
             </div>
             <div class="card-image waves-effect waves-block waves-light">
@@ -230,7 +232,7 @@ function showEvents(json) {
                 <span class="card-title activator grey-text text-darken-4" >${i+1}.${title}<i class="material-icons right">more_vert</i></span>
                 <ul>
                     <li class="info_${id}" >Date: ${arrayItem.dates.start.localDate}</li>
-                    <li class="info_${id}" >Time: ${arrayItem.dates.start.localTime}</li>
+                    <li class="info_${id}" >Time: ${time}</li>
                 </ul>
             </div>                
             <div class=" grey lighten-3 card-reveal">
@@ -387,9 +389,9 @@ function addEvent(e){
       // coming back from the post axios call
       .then(function(res){
         if(res.data.status=='failed') 
-        console.log('this event record already exist')
-        else
-        console.log('a record was inserted successfully')
+          swal("Oops...","This event is already exist!", "error")
+        else      
+            swal("Good job!", "An event was added successfully ", "success")
       })
       // catching the post call error
       .catch(function(err) {

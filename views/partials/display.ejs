@@ -1,24 +1,26 @@
-<table>
+<table class="responsive-table  centered striped tabledata">
       <tr>
-      	<th>Image</th>
-         <th>ID</th>
-         <th>Date</th>
+      	
+         <th >ID</th>
+         <th>Image</th>
          <th>Event</th>
+         <th>Date</th>
+         <th>Time</th>
          <th>Address</th>
          <th>Category</th>
          <th>Action</th>
       </tr>
       <% data.forEach(function(d,i) { %>
       <tr>
-        <td id="id_<%=d.id%>" > i </td>
-        <td id="event_<%=d.id%>" > <%=d.event%> </td>
-        <td id="image_<%=d.id%>" > <%=d.image%> </td>
+        <td id="id_<%=d.id%>" > <%=i+1%> </td>
+        <td id="image_<%=d.id%>" 	><img class="z-depth-5 tableimage" src=<%=d.image%>></td>
+        <td id="event_<%=d.id%>" ><h6> <%=d.event%></h6></td>
         <td id="eventdate_<%=d.id%>" > <%=d.eventdate%> </td>
         <td id="eventtime_<%=d.id%>" > <%=d.eventtime%> </td>
         <td id="address_<%=d.id%>" > <%=d.address%> </td>
         <td id="category_<%=d.id%>" > <%=d.category%> </td>
         <td>
-          <button type="button" id=delete_<%=d.id%> class="delete">🗑</button>
+        	<a class=" btn-floating btn-large waves-effect waves-light red"><i id="delete_<%=d.id%>"  class="material-icons delete">delete</i></a>
         </td>
       </tr> 
     <% }) %> 

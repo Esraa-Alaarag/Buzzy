@@ -18,24 +18,40 @@ function readAllEvents(e) {
     })
 }
 
+$( ".delete" ).click(function() {
+  addEventListener('click', deleteEvent)
+});
+
 function deleteEvent(e) {
-  if (event.target.className.toLowerCase() === 'delete') {
-    // every id was seperated by _ss# so I can catch it later
-    let e_ss = event.target.id;
-    let ss = e_ss.split("_")[1];
-    console.log(ss);
-    if(confirm(`Are you sure you want to delete person with the Social security number of ${ss}`)){
-    let string=baseURL+"/"+ss;
-    console.log(string);
-    axios.delete(string).then(function(res) {
-    window.alert(`person with ss ${ss} was deleted successfully`);
-    window.location.reload()
-  })
-.catch(function(err) {
-      console.log(err)
-    })}
+  if (event.target.className==="material-icons delete"){
+  console.log('deleteing is ready');
+     let e_id = event.target.id;
+     let id = e_id.split("_")[1];
+     console.log(id);
+     swal({
+          title: "Are you sure?",
+          text: "You will not be able to recover this event!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Yes, delete it!",
+          closeOnConfirm: false
+        },
+        function(){
+          swal("Deleted!", "Your event has been deleted.", "success");
+        let string=baseURL+"/"+id;
+          console.log(string);
+          axios.delete(string)
+          .then(function(res) {
+          window.location.reload()
+        })
+      .catch(function(err) {
+            console.log(err)
+          })}
+          );
+    }
 }
-}
+
 
 window.onload=readAllEvents;
 

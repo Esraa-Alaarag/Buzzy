@@ -54,26 +54,13 @@ function getAllEvents(req, res, next){
     });  
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 function removeEvent(req, res, next) {
-  console.log("inside removeContact", req.params.ss)
-  let contactss = parseInt(req.params.ss)
-  console.log(contactss)
-   db.result('delete from information where ss = $1', contactss)
+  console.log("=================>inside removeEvent", req.params.id)
+  
+  console.log(req.params.id)
+   db.result('delete from myevents where id = $1', req.params.id)
    .then(function(data){
-    console.log(data)
+    //console.log(data)
     res.status(200)
     .json({
           status:'success',
@@ -82,13 +69,12 @@ function removeEvent(req, res, next) {
         })
     })
     .catch(error => {
-    console.log('record with ss:'+req.params.ss+' was not deleted');// print error;
+    console.log(error);
+    console.log('record with id:'+req.params.id+' was not deleted');// print error;
     res.json({
       status:'failed',
-      message:'already exist'
+      message: error
     })
-
-    return false;
     });
 }
 
