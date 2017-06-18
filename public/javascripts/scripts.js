@@ -1,3 +1,4 @@
+let baseURL = '/';
 // this flag to show the user his location on the map if he clicked that option
 var isitclicked = false;
 
@@ -202,6 +203,7 @@ function showEvents(json) {
     arrayItem.priceRanges? max = arrayItem.priceRanges[0].max+" $ -" : max="Not specified"
     arrayItem.priceRanges? min = arrayItem.priceRanges[0].min+" $" : min=""
     arrayItem.info? info=arrayItem.info : info= "Not available"
+    var id=arrayItem.id;
     if (genre==="Undefined")
         genre=" ";
     if (segment==="Undefined")
@@ -216,27 +218,27 @@ function showEvents(json) {
                 </a>
                 <ul>
                   <li><a class="btn-floating  teal lighten-2 " target="_blank" href=${arrayItem.url} ><i class="material-icons">shopping_cart</i></a></li>
-                  <li><a class="btn-floating  teal lighten-2 "><i class="material-icons info_${i}" id ="saveEvent" >playlist_add</i></a></li>
+                  <li><a class="btn-floating  teal lighten-2 "><i class="material-icons info_${id}" id ="saveEvent" >playlist_add</i></a></li>
                 </ul>
             </div>
             <div class="card-image waves-effect waves-block waves-light">
                 <iframe src="https://www.facebook.com/plugins/share_button.php?href=${arrayItem.url}&layout=button&size=large&mobile_iframe=true&width=73&height=28&appId" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-                <img class="activator info_${i} cardimage"  src=${arrayItem.images[5].url}>
+                <img class="activator info_${id} cardimage"  src=${arrayItem.images[5].url}>
             
             </div>
             <div class="card-content">
                 <span class="card-title activator grey-text text-darken-4" >${i+1}.${title}<i class="material-icons right">more_vert</i></span>
                 <ul>
-                    <li class="info_${i}" >Date: ${arrayItem.dates.start.localDate}</li>
-                    <li class="info_${i}" >Time: ${arrayItem.dates.start.localTime}</li>
+                    <li class="info_${id}" >Date: ${arrayItem.dates.start.localDate}</li>
+                    <li class="info_${id}" >Time: ${arrayItem.dates.start.localTime}</li>
                 </ul>
             </div>                
             <div class=" grey lighten-3 card-reveal">
-                <span class="card-title grey-text text-darken-4 info_${i} " >${title}<i class="material-icons right">close</i></span>
+                <span class="card-title grey-text text-darken-4 info_${id} " >${title}<i class="material-icons right">close</i></span>
                 <table>
                     <tr>
                         <th >Address:</th>
-                        <td class="info_${i}" >${street},${city},${zip}</td>
+                        <td class="info_${id}" >${street},${city},${zip}</td>
                     </tr>
                     <tr>
                         <th>Information:</th>
@@ -252,7 +254,7 @@ function showEvents(json) {
                     </tr>
                     <tr>
                         <th>Category:</th>
-                        <td ><div class="chip info_${i}">${genre}</div><div class="chip info_${i}">${segment}</div><div class="chip info_${i}">${subGenre}</div></td>
+                        <td ><div class="chip info_${id}">${genre}</div><div class="chip info_${id}">${segment}</div><div class="chip info_${id}">${subGenre}</div></td>
                     </tr>
                 </table>
             </div>
@@ -349,6 +351,54 @@ console.log(latlng);
   });
   marker.setIcon('/images/micli.png');
 }
+
+$('#results').on('click', '#saveEvent', function(){
+    addEventListener('click', addEvent)
+});
+
+
+function addEvent(e){
+  if (event.target.id==='saveEvent' ) {
+      id = event.target.className.split(" ");
+      var pk=id[1].split("_");
+      pk=pk[1];
+      var information = document.getElementsByClassName(id[1])
+      var image=information[1].currentSrc
+      var date=information[2].innerHTML;
+      var time=information[3].innerHTML;
+      date=date.split(": ");
+      time=time.split(": ");
+      var title=information[4].firstChild.data
+      var address=information[5].innerHTML
+      var genre=information[6].firstChild.data
+      var segment=information[7].firstChild.data
+      var subGenre=information[8].firstChild.data
+      console.log(pk+image+date+time+title+address+genre+segment+subGenre);
+      
+      axios.post(baseURL, {
+        "id" : pk,
+        "event" : title,
+        "date": date[1],
+        "time": time[1],
+        "address": address,
+        "category": `${genre} ${segment} ${subGenre}`,
+        "image": image
+      })
+      // coming back from the post axios call
+      .then(function(res){
+        if(res.data.status=='failed') 
+        console.log('this event record already exist')
+        else
+        console.log('a record was inserted successfully')
+      })
+      // catching the post call error
+      .catch(function(err) {
+        console.log(err);
+        return(err)
+      })
+      }    
+} 
+
 
 
 
