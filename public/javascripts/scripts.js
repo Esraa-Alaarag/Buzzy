@@ -216,27 +216,27 @@ function showEvents(json) {
                 </a>
                 <ul>
                   <li><a class="btn-floating  teal lighten-2 " target="_blank" href=${arrayItem.url} ><i class="material-icons">shopping_cart</i></a></li>
-                  <li><a class="btn-floating save teal lighten-2 "><i class="material-icons">playlist_add</i></a></li>
+                  <li><a class="btn-floating  teal lighten-2 "><i class="material-icons info_${i}" id ="saveEvent" >playlist_add</i></a></li>
                 </ul>
             </div>
             <div class="card-image waves-effect waves-block waves-light">
                 <iframe src="https://www.facebook.com/plugins/share_button.php?href=${arrayItem.url}&layout=button&size=large&mobile_iframe=true&width=73&height=28&appId" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-                <img class="activator cardimage" src=${arrayItem.images[5].url}>
+                <img class="activator info_${i} cardimage"  src=${arrayItem.images[5].url}>
             
             </div>
             <div class="card-content">
-                <span class="card-title  activator grey-text text-darken-4">${i+1}.${title}<i class="material-icons right">more_vert</i></span>
+                <span class="card-title activator grey-text text-darken-4" >${i+1}.${title}<i class="material-icons right">more_vert</i></span>
                 <ul>
-                    <li>Date: ${arrayItem.dates.start.localDate}</li>
-                    <li>Time: ${arrayItem.dates.start.localTime}</li>
+                    <li class="info_${i}" >Date: ${arrayItem.dates.start.localDate}</li>
+                    <li class="info_${i}" >Time: ${arrayItem.dates.start.localTime}</li>
                 </ul>
             </div>                
             <div class=" grey lighten-3 card-reveal">
-                <span class="card-title grey-text text-darken-4">${title}<i class="material-icons right">close</i></span>
+                <span class="card-title grey-text text-darken-4 info_${i} " >${title}<i class="material-icons right">close</i></span>
                 <table>
                     <tr>
-                        <th>Address:</th>
-                        <td>${street},${city},${zip}</td>
+                        <th >Address:</th>
+                        <td class="info_${i}" >${street},${city},${zip}</td>
                     </tr>
                     <tr>
                         <th>Information:</th>
@@ -252,7 +252,7 @@ function showEvents(json) {
                     </tr>
                     <tr>
                         <th>Category:</th>
-                        <td><div class="chip">${genre}</div><div class="chip">${segment}</div><div class="chip">${subGenre}</div></td>
+                        <td ><div class="chip info_${i}">${genre}</div><div class="chip info_${i}">${segment}</div><div class="chip info_${i}">${subGenre}</div></td>
                     </tr>
                 </table>
             </div>

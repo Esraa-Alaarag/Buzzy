@@ -4,8 +4,10 @@ DROP TABLE IF EXISTS MyEvents;
 
 CREATE TABLE MyEvents (
 	id SERIAL PRIMARY KEY NOT NULL ,
-  date VARCHAR NOT NULL,
-  event VARCHAR NOT NULL,
-  location VARCHAR NOT NULL,
-  category VARCHAR 
+  	event VARCHAR NOT NULL,
+  	date VARCHAR NOT NULL,
+  	time VARCHAR,
+  	address VARCHAR NOT NULL,
+  	category VARCHAR NOT NULL,
+  	image VARCHAR NOT NULL
 );
