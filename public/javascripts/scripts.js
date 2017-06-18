@@ -78,9 +78,14 @@ $('.submit').on('click', function () {
     event.preventDefault();
     // get the dates values from input field
     var address= $("#enteredAddress").val();
-    
     var startDate = $("#StartDate").val();
     var endDate = $("#EndDate").val();
+
+
+    $('html, body').animate({
+        scrollTop: $( $('.try').attr('href') ).offset().top
+    }, 1500);
+
     // validate start and end dates
     // setting default value if the user did not enter start date get todays date converted
     // to the API required format
@@ -95,6 +100,7 @@ $('.submit').on('click', function () {
         getcoordinate(address,startDate,endDate, categories)
     }// calling the API for data
     else getevents(startDate,endDate, categories)
+        
 });
 
 // change the date format to the format that API requested
@@ -133,11 +139,11 @@ function getcoordinate(address,startDate,endDate, categories){
             } 
         else{
             swal({
-  title: "Oops...",
-  text: "This address is invalid Enter a valid address and try again.",
-  type: "error",
-  confirmButtonText: "Cool"
-});
+              title: "Oops...",
+              text: "This address is invalid Enter a valid address and try again.",
+              type: "error",
+              confirmButtonText: "Cool"
+            });
         }
     });
 }
@@ -155,18 +161,27 @@ function getevents(StartDate,EndDate,Category) {
                   // console.log(json);
                 var e = document.getElementById("result-title");
                 if(json.page.totalElements>0){
-                     $("#result-title").css('visibility', 'visible');
                     e.innerHTML =  `<h5> ${json.page.totalElements} events were found.<h5>`;
                     showEvents(json);
                     initMap(latlng, json);
+                    console.log('here,'+json.page.totalElements);
                     }
                 else
                 {
+                    console.log('there,'+json.page.totalElements);
+
                     e.innerHTML =  `<h5> Sorry , No event was found. Change the date or the category and try again. <h5>`;   
                 }
            },
       error: function(xhr, status, err) {
                   console.log(err);
+                  swal({
+                  title: "Oops...",
+                  text: "Something went off, Check your information and try again.",
+                  type: "error",
+                  confirmButtonText: "Ok"
+                });
+
                }
     });
 }
@@ -194,45 +209,54 @@ function showEvents(json) {
     if (subGenre==="Undefined")
         subGenre=" "
     $("#results").append(
-        `<div id=card${i} class="card  col s6">
-             <a target=_blank href=${arrayItem.url} class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">shopping_cart</i></a>
+        `<div id=card${i} class="card z-depth-5 col s6">
+            <div class="fixed-action-btn click-to-toggle horizontal">
+                <a class="btn-floating btn-large pulse red">
+                    <i class="large material-icons">shop</i>
+                </a>
+                <ul>
+                  <li><a class="btn-floating  teal lighten-2 " target="_blank" href=${arrayItem.url} ><i class="material-icons">shopping_cart</i></a></li>
+                  <li><a class="btn-floating save teal lighten-2 "><i class="material-icons">playlist_add</i></a></li>
+                </ul>
+            </div>
             <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator cardimage" src=${arrayItem.images[5].url}>
+                <iframe src="https://www.facebook.com/plugins/share_button.php?href=${arrayItem.url}&layout=button&size=large&mobile_iframe=true&width=73&height=28&appId" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                <img class="activator cardimage" src=${arrayItem.images[5].url}>
+            
             </div>
             <div class="card-content">
-            <span class="card-title  activator grey-text text-darken-4">${i+1}.${title}<i class="material-icons right">more_vert</i></span>
-            </div>
+                <span class="card-title  activator grey-text text-darken-4">${i+1}.${title}<i class="material-icons right">more_vert</i></span>
                 <ul>
-                <li>Date: ${arrayItem.dates.start.localDate}</li>
-                <li>Time: ${arrayItem.dates.start.localTime}</li>
-                <li><iframe src="https://www.facebook.com/plugins/share_button.php?href=${arrayItem.url}&layout=button&size=large&mobile_iframe=true&width=73&height=28&appId" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe></li>
+                    <li>Date: ${arrayItem.dates.start.localDate}</li>
+                    <li>Time: ${arrayItem.dates.start.localTime}</li>
                 </ul>
-                <div class=" grey lighten-3 card-reveal">
+            </div>                
+            <div class=" grey lighten-3 card-reveal">
                 <span class="card-title grey-text text-darken-4">${title}<i class="material-icons right">close</i></span>
                 <table>
-                <tr>
-                <th>Address:</th>
-                <td>${street},${city},${zip}</td>
-                </tr>
-                <tr>
-                <th>Information:</th>
-                <td>${info}</td>
-                </tr>
-                <tr>
-                <th>Distance:</th>
-                <td>${arrayItem.distance} Mile</td>
-                </tr>
-                <tr>
-                <th>Price:</th>
-                <td>${max}${min}</td>
-                </tr>
-                <tr>
-                <th>Category:</th>
-                <td><div class="chip">${genre}</div><div class="chip">${segment}</div><div class="chip">${subGenre}</div></td>
-                </tr>
+                    <tr>
+                        <th>Address:</th>
+                        <td>${street},${city},${zip}</td>
+                    </tr>
+                    <tr>
+                        <th>Information:</th>
+                        <td>${info}</td>
+                    </tr>
+                    <tr>
+                        <th>Distance:</th>
+                        <td>${arrayItem.distance} Mile</td>
+                    </tr>
+                    <tr>
+                        <th>Price:</th>
+                        <td>${max}${min}</td>
+                    </tr>
+                    <tr>
+                        <th>Category:</th>
+                        <td><div class="chip">${genre}</div><div class="chip">${segment}</div><div class="chip">${subGenre}</div></td>
+                    </tr>
                 </table>
-                </div>
-              </div> `)});
+            </div>
+        </div> `)});
   
 }
                 // 

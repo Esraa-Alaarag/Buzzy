@@ -69,16 +69,21 @@ p{
 
 }
 
+#u_0_1{
+ z-index: 1;
+ margin: 5px;
+}
+.card .card-image img{
+  position: absolute;
+}
 
-.btn-floating{
+.fixed-action-btn{
 z-index: 3;
 position: absolute;
-top: 5;
-left:5;
+margin: 10px;
 }
 #result-title{
   padding-left: 3%;
-  visibility: hidden;
   margin-top: 0;
   margin-bottom: 0;
 }

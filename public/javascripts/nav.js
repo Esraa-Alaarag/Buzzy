@@ -17,8 +17,7 @@ $(document).ready(function(){
     $('select').material_select();
   });
 
-
-  $(document).ready(function(){
-      $('.slider').slider();
-    });
-
+  $('.fixed-action-btn').openFAB();
+  $('.fixed-action-btn').closeFAB();
+  $('.fixed-action-btn.toolbar').openToolbar();
+  $('.fixed-action-btn.toolbar').closeToolbar();
