@@ -36,10 +36,10 @@ function AddEvent(req,res, next) {
 
 
 function getAllEvents(req, res, next){
-  db.any('select * from information order by ss')
+  db.any('select * from myevents order by eventdate')
   .then(function(data){
     console.log(data);
-    res.render( 'embassy', { title:"Embassy of Zootopia Database", data:data })
+    res.render( 'MyEvents', { title:"My Events", data:data })
     res.status(200)
     console.log('getting all the data was sucessful')
     })
