@@ -118,8 +118,10 @@ Step 6:The user can search the events based on event's Category.
 11. display number of events found
 12. display events in card grid. max number of activities = 15 per page
 13. If the user clicked “save events” the events will be saved in the database.
-14. If the user clicked delete the event will be deleted
-
+14. if the event is already saved in the database , display error msg
+15. If the user clicked my events . 
+16. load all the saved events in the databse. display it as a table
+17. if the user clicked delete , delete the evant from the database reload the database.
 
 <a name="database"> 
 
