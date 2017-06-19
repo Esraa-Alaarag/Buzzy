@@ -6,7 +6,7 @@ var isitclicked = false;
 function mapInitialize() {
     myMap(40.7400245, -73.9897259, 10);
 }
-
+var markers=[]
 var infoArr = []
 
 // attaching the btn to the function
@@ -46,7 +46,7 @@ function showPosition(position) {
     console.log("Latitude: " + position.coords.latitude +
         "Longitude: " + position.coords.longitude);
     // display the user location on the map
-    myMap(position.coords.latitude, position.coords.longitude, 15)
+    myMap(position.coords.latitude, position.coords.longitude, 10)
     // stringify the object
     stringifycoord(position.coords.latitude,position.coords.longitude)
     // object of user location
@@ -170,7 +170,7 @@ function getevents(page) {
     console.log("searched data",infoArr[0],category,infoArr[2],EndDate,infoArr[4],infoArr[5]);
     $.ajax({
       type:"GET",
-      url:`https://app.ticketmaster.com/discovery/v2/events.json?apikey=QFYXssyZdIBdLhFpDQCE0p40bZxNM4Ib${category}&latlong=${infoArr[0]}&startDateTime=${infoArr[2]}${EndDate}&radius=${infoArr[4]}&unit=miles&sort=date,asc&page=${infoArr[5]}&size=30`,
+      url:`https://app.ticketmaster.com/discovery/v2/events.json?apikey=QFYXssyZdIBdLhFpDQCE0p40bZxNM4Ib${category}&latlong=${infoArr[0]}&startDateTime=${infoArr[2]}${EndDate}&radius=${infoArr[4]}&unit=miles&sort=date,asc&page=${infoArr[5]}&size=15`,
       async:true,
       dataType: "json",
       success: function(json) {
@@ -294,14 +294,13 @@ function Pagination(pages){
   return blocks;
 
 }
-                // 
+                
 
 
 
 
 
 function myMap(latitude, longitude, zoom) {
-    console.log(latitude, longitude, zoom);
     var map = new google.maps.Map(document.getElementById('googleMap'), {
         zoom: zoom,
         scrollwheel: false,
@@ -309,8 +308,8 @@ function myMap(latitude, longitude, zoom) {
             lat: latitude,
             lng: longitude
         }
+        
     });
-
     var geocoder = new google.maps.Geocoder;
     var infowindow = new google.maps.InfoWindow;
 
@@ -346,18 +345,21 @@ function myFunction() {
 
 function initMap(position, json) {
     var count;
-    console.log(position);
   var mapDiv = document.getElementById('googleMap');
   var map = new google.maps.Map(mapDiv, {
     center: {lat: position.lat, lng: position.lng},
     zoom: 10,
      scrollwheel: false,
   });
-  json.page.totalElements>json.page.size? count=json.page.size : count=json.page.totalElements;
+  if(infoArr[5]<json.page.totalPages-1)
+     json.page.totalElements>json.page.size? count=json.page.size : count=json.page.totalElements;
+ else 
+    count=json.page.totalElements%15
+console.log(count);
   for(var i=0; i<count; i++) {
     addMarker(map, json._embedded.events[i],i);
   }
-    userlocation(map);
+   userlocation(map);
 }
 
 function addMarker(map, event,i) {
