@@ -81,7 +81,7 @@ $('.submit').on('click', function () {
     var address= $("#enteredAddress").val();
     var startDate = $("#StartDate").val();
     var endDate = $("#EndDate").val();
-
+    var radius= $('#radius').val();
 
     $('html, body').animate({
         scrollTop: $( $('.try').attr('href') ).offset().top
@@ -98,9 +98,9 @@ $('.submit').on('click', function () {
     var categories = $("#Category").val();
     console.log(startDate,endDate, categories);
     if(!isitclicked){
-        getcoordinate(address,startDate,endDate, categories)
+        getcoordinate(address,startDate,endDate, categories , radius)
     }// calling the API for data
-    else getevents(startDate,endDate, categories)
+    else getevents(startDate,endDate, categories, radius)
         
 });
 
@@ -127,7 +127,7 @@ function today() {
     return temp;
 }
 
-function getcoordinate(address,startDate,endDate, categories){
+function getcoordinate(address,startDate,endDate, categories,radius){
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({'address': address}, function(results, status) {
         if (status === 'OK') {
@@ -136,7 +136,7 @@ function getcoordinate(address,startDate,endDate, categories){
             lng: results[0].geometry.viewport.b.b
             };
             latlonstring=latlng.lat + "," + latlng.lng;
-            getevents(startDate,endDate, categories)
+            getevents(startDate,endDate, categories,radius)
             } 
         else{
             swal({
@@ -149,13 +149,13 @@ function getcoordinate(address,startDate,endDate, categories){
     });
 }
 
-function getevents(StartDate,EndDate,Category) {
+function getevents(StartDate,EndDate,Category,radius) {
     EndDate? EndDate=`&endDateTime=${EndDate}` : EndDate="";
     Category? Category=`&classificationId=${Category}` : Category="";
-    console.log("searched data",Category,EndDate,StartDate,latlonstring);
+    console.log("searched data",Category,EndDate,StartDate,latlonstring,radius);
     $.ajax({
       type:"GET",
-      url:`https://app.ticketmaster.com/discovery/v2/events.json?classificationId=${Category}&apikey=QFYXssyZdIBdLhFpDQCE0p40bZxNM4Ib&latlong=${latlonstring}&startDateTime=${StartDate}${EndDate}&radius=10&unit=miles`,
+      url:`https://app.ticketmaster.com/discovery/v2/events.json?classificationId=${Category}&apikey=QFYXssyZdIBdLhFpDQCE0p40bZxNM4Ib&latlong=${latlonstring}&startDateTime=${StartDate}${EndDate}&radius=${radius}&unit=miles&sort=date,asc`,
       async:true,
       dataType: "json",
       success: function(json) {
@@ -308,6 +308,9 @@ function myMap(latitude, longitude, zoom) {
 
 };
 
+function myFunction() {
+    document.getElementById("mainForm").reset();
+}
 
 
 function initMap(position, json) {

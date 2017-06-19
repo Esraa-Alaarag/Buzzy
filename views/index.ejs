@@ -27,19 +27,24 @@
                   </div>
                </div>
                <div class="row container col s12">
-                  <div class="input-field col s4">
+                  <div class="input-field col s6">
                      From<input type="date" id="StartDate" class=" inline datepicker" placeholder="2017-06-17">
                   </div>
-                  <div class="input-field col s4">
+                  <div class="input-field col s6">
                      To<input placeholder="2017-06-17" type="date" id="EndDate" class=" inline datepicker">
                   </div>
-                  <div class="input-field col s4">
-                     <div class="input-field button submit">
-                        <button href="#mainmap" class="btn-large waves-effect waves-light try" type="submit" name="action">Submit  
-                        <i class="material-icons">send</i>
-                        </button>
+               </div>
+               <div class="row container col s12">
+                  <div class="input-field col s6">
+                     <div class="range-field">Radius 
+                        <input class="col" type="range" value=10 id="radius" step="10" min="10" max="50" />
                      </div>
                   </div>
+                  <div  class=" col s6 input-field button submit">
+                     <button href="#mainmap" class="btn-large waves-effect waves-light try" type="submit" name="action">Submit  
+                     <i class="material-icons">send</i>
+                     </button>
+                   </div>
                </div>    
             </form>
          </div>
