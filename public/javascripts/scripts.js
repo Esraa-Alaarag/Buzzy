@@ -7,6 +7,7 @@ function mapInitialize() {
     myMap(40.7400245, -73.9897259, 10);
 }
 
+var infoArr = []
 
 // attaching the btn to the function
 //I did not make it inline function 
@@ -36,7 +37,6 @@ function getTheAddress() {
 
 // initlize global variable
 var latlng ={}
-var latlonstring = "";
 
 // getting latitute and longitude
 function showPosition(position) {
@@ -48,7 +48,7 @@ function showPosition(position) {
     // display the user location on the map
     myMap(position.coords.latitude, position.coords.longitude, 15)
     // stringify the object
-    latlonstring = position.coords.latitude + "," + position.coords.longitude;
+    stringifycoord(position.coords.latitude,position.coords.longitude)
     // object of user location
     latlng = {
         lat: parseFloat(position.coords.latitude),
@@ -76,7 +76,9 @@ function showPosition(position) {
 
 // after submitting the form function
 $('.submit').on('click', function () {
+    
     event.preventDefault();
+    if(event.target.id==="submit"){
     // get the dates values from input field
     var address= $("#enteredAddress").val();
     var startDate = $("#StartDate").val();
@@ -91,16 +93,23 @@ $('.submit').on('click', function () {
     // setting default value if the user did not enter start date get todays date converted
     // to the API required format
     startDate ? startDate=FormatDate(startDate) : startDate=today();
+    
     // if the user did not enter End date get the date after 10 days and convert
     // convert to the API required format
     endDate ? endDate=FormatDate(endDate) : endDate=""
     // getting the required category from selection if not entered select music
     var categories = $("#Category").val();
     console.log(startDate,endDate, categories);
+    infoArr[2]=startDate
+    infoArr[3]=endDate
+    infoArr[1]=categories
+    infoArr[4]=radius
+    infoArr[5]=0
     if(!isitclicked){
-        getcoordinate(address,startDate,endDate, categories , radius)
+        getcoordinate(address)
     }// calling the API for data
-    else getevents(startDate,endDate, categories, radius)
+    else getevents(infoArr[5])
+}
         
 });
 
@@ -123,11 +132,16 @@ function today() {
     temp += 1900+year+"-";
     temp += month+"-";
     temp += day+"T00:00:00Z";
-    console.log(temp);
     return temp;
 }
 
-function getcoordinate(address,startDate,endDate, categories,radius){
+function stringifycoord(lat,lng){
+    var latlonstring=lat + "," + lng;
+    infoArr[0]=(latlonstring)
+    return latlonstring
+}
+
+function getcoordinate(address){
     var geocoder = new google.maps.Geocoder();
     geocoder.geocode({'address': address}, function(results, status) {
         if (status === 'OK') {
@@ -135,8 +149,8 @@ function getcoordinate(address,startDate,endDate, categories,radius){
             lat: results[0].geometry.viewport.f.b,
             lng: results[0].geometry.viewport.b.b
             };
-            latlonstring=latlng.lat + "," + latlng.lng;
-            getevents(startDate,endDate, categories,radius)
+            stringifycoord(latlng.lat,latlng.lng)
+            getevents(infoArr[5])
             } 
         else{
             swal({
@@ -149,28 +163,27 @@ function getcoordinate(address,startDate,endDate, categories,radius){
     });
 }
 
-function getevents(StartDate,EndDate,Category,radius) {
-    EndDate? EndDate=`&endDateTime=${EndDate}` : EndDate="";
-    Category? Category=`&classificationId=${Category}` : Category="";
-    console.log("searched data",Category,EndDate,StartDate,latlonstring,radius);
+function getevents(page) {
+    infoArr[5]=page;
+    infoArr[3]? EndDate=`&endDateTime=${infoArr[3]}` : EndDate="";
+    infoArr[1]? category=`&classificationId=${infoArr[1]}` : category="";
+    console.log("searched data",infoArr[0],category,infoArr[2],EndDate,infoArr[4],infoArr[5]);
     $.ajax({
       type:"GET",
-      url:`https://app.ticketmaster.com/discovery/v2/events.json?classificationId=${Category}&apikey=QFYXssyZdIBdLhFpDQCE0p40bZxNM4Ib&latlong=${latlonstring}&startDateTime=${StartDate}${EndDate}&radius=${radius}&unit=miles&sort=date,asc`,
+      url:`https://app.ticketmaster.com/discovery/v2/events.json?apikey=QFYXssyZdIBdLhFpDQCE0p40bZxNM4Ib${category}&latlong=${infoArr[0]}&startDateTime=${infoArr[2]}${EndDate}&radius=${infoArr[4]}&unit=miles&sort=date,asc&page=${infoArr[5]}&size=30`,
       async:true,
       dataType: "json",
       success: function(json) {
-                  // console.log(json);
+                   console.log(json);
                 var e = document.getElementById("result-title");
                 if(json.page.totalElements>0){
+                    var pages=json.page.totalPages
                     e.innerHTML =  `<h5> ${json.page.totalElements} events were found.<h5>`;
-                    showEvents(json);
+                    showEvents(json,pages);
                     initMap(latlng, json);
-                    console.log('here,'+json.page.totalElements);
                     }
                 else
                 {
-                    console.log('there,'+json.page.totalElements);
-
                     e.innerHTML =  `<h5> Sorry , No event was found. Change the date or the category and try again. <h5>`;   
                 }
            },
@@ -187,10 +200,13 @@ function getevents(StartDate,EndDate,Category,radius) {
     });
 }
 
-function showEvents(json) {
-    var obj={};
+function showEvents(json,pages) {
+    var obj={},sn;
     obj=json._embedded.events;
-    console.log(obj);
+    //console.log(obj);
+    $("#results").html(" ")
+    sn=infoArr[5]*30;
+    console.log("=====>"+sn);
     obj.forEach( function (arrayItem,i){ 
     arrayItem.name? title=arrayItem.name : title=" ";
     arrayItem.classifications[0].genre? genre=arrayItem.classifications[0].genre.name : genre=" ";
@@ -207,11 +223,13 @@ function showEvents(json) {
     arrayItem.dates.start.localDate? date=arrayItem.dates.start.localDate: date="Not specified"
     var id=arrayItem.id;
     if (genre==="Undefined")
-        genre=" ";
+        genre=" ";;
     if (segment==="Undefined")
-        segment=" "
+        segment=" ";
     if (subGenre==="Undefined")
-        subGenre=" "
+        subGenre=" ";
+    ++sn
+    console.log("=====>"+sn);
     $("#results").append(
         `<div id=card${i} class="card hoverable z-depth-5 col s6">
             <div class="fixed-action-btn   horizontal">
@@ -229,7 +247,7 @@ function showEvents(json) {
             
             </div>
             <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4" >${i+1}.${title}<i class="material-icons right">more_vert</i></span>
+                <span class="card-title activator grey-text text-darken-4" >${sn}.${title}<i class="material-icons right">more_vert</i></span>
                 <ul>
                     <li class="info_${id}" >Date: ${arrayItem.dates.start.localDate}</li>
                     <li class="info_${id}" >Time: ${time}</li>
@@ -247,10 +265,6 @@ function showEvents(json) {
                         <td>${info}</td>
                     </tr>
                     <tr>
-                        <th>Distance:</th>
-                        <td>${arrayItem.distance} Mile</td>
-                    </tr>
-                    <tr>
                         <th>Price:</th>
                         <td>${max}${min}</td>
                     </tr>
@@ -261,7 +275,24 @@ function showEvents(json) {
                 </table>
             </div>
         </div> `)});
+     var block=Pagination(pages)
+    
+     $("#pagination").html(block)
+    }
+    
   
+
+
+function Pagination(pages){
+    let i,blocks;
+    blocks=`<br><ul class="pagination">
+    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li>`
+    for(i=0;i<pages;i++)
+        blocks+=`<li class="waves-effect"><a onclick="getevents(${i})" href="#!">${i+1}</a></li>`
+    blocks+=`<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+  </ul>`
+  return blocks;
+
 }
                 // 
 

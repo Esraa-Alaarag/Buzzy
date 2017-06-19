@@ -24,6 +24,11 @@ body{
 .button{
   text-align: center;
 }
+#pagination{
+  text-align: center;
+  display: block;
+  position: relative;
+}
 
 
 /*.separator{
@@ -40,7 +45,10 @@ body{
 .card-title{
   height: 70px;
   position: relative;
+  overflow: scroll;
+  
 }
+
 .cardcont
 {
   height: auto;
