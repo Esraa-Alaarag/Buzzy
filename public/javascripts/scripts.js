@@ -228,7 +228,7 @@ function showEvents(json, pages) {
         if (subGenre === "Undefined")
             subGenre = " ";
         ++sn
-        console.log("=====>" + sn);
+        console.log("=====>" + arrayItem.url);
         $("#results").append(
             `<div id=card${i} class="card hoverable z-depth-5 col s6">
             <div class="fixed-action-btn   horizontal">
@@ -241,7 +241,9 @@ function showEvents(json, pages) {
                 </ul>
             </div>
             <div class="card-image waves-effect waves-block waves-light">
-                <iframe src="https://www.facebook.com/plugins/share_button.php?href=${arrayItem.url}&layout=button&size=large&mobile_iframe=true&width=73&height=28&appId" width="73" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${arrayItem.url}" target="_blank">
+                <img id='facebook' src="/images/facebook.png" alt="shareonfacebook" />
+                </a>
                 <img class="activator info_${id} cardimage"  src=${arrayItem.images[5].url}>
             
             </div>
