@@ -27,7 +27,7 @@
 
 ## APP DESCRIPTION:
 
-An app to connects user to activities available on ticket masters around his location or any other location.
+An app that connects user to activities available on ticket masters around his location or any other location.
 
 Step 1: The user enters an address or click to let the app finds his location. 
 
