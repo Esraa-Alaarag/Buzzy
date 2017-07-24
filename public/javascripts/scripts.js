@@ -42,8 +42,7 @@ function showPosition(position) {
     // set the flag to true which means that the btn was clicked
     isitclicked = true;
     var geocoder = new google.maps.Geocoder;
-    console.log("Latitude: " + position.coords.latitude +
-        "Longitude: " + position.coords.longitude);
+    //console.log("Latitude: " + position.coords.latitude + "Longitude: " + position.coords.longitude);
     // display the user location on the map
     myMap(position.coords.latitude, position.coords.longitude, 10)
     // stringify the object
@@ -97,7 +96,7 @@ $('.submit').on('click', function() {
         endDate ? endDate = FormatDate(endDate) : endDate = ""
         // getting the required category from selection if not entered select music
         var categories = $("#Category").val();
-        console.log(startDate, endDate, categories);
+        //console.log(startDate, endDate, categories);
         infoArr[2] = startDate
         infoArr[3] = endDate
         infoArr[1] = categories
@@ -114,7 +113,7 @@ $('.submit').on('click', function() {
 // change the date format to the format that API requested
 function FormatDate(date) {
     datestring = date + "T00:00:00Z";
-    console.log(datestring);
+    //console.log(datestring);
     return datestring;
 }
 
@@ -166,14 +165,14 @@ function getevents(page) {
     infoArr[5] = page;
     infoArr[3] ? EndDate = `&endDateTime=${infoArr[3]}` : EndDate = "";
     infoArr[1] ? category = `&classificationId=${infoArr[1]}` : category = "";
-    console.log("searched data", infoArr[0], category, infoArr[2], EndDate, infoArr[4], infoArr[5]);
+    //console.log("searched data", infoArr[0], category, infoArr[2], EndDate, infoArr[4], infoArr[5]);
     $.ajax({
         type: "GET",
         url: `https://app.ticketmaster.com/discovery/v2/events.json?apikey=QFYXssyZdIBdLhFpDQCE0p40bZxNM4Ib${category}&latlong=${infoArr[0]}&startDateTime=${infoArr[2]}${EndDate}&radius=${infoArr[4]}&unit=miles&sort=date,asc&page=${infoArr[5]}&size=15`,
         async: true,
         dataType: "json",
         success: function(json) {
-            console.log(json);
+            //console.log(json);
             var e = document.getElementById("result-title");
             if (json.page.totalElements > 0) {
                 var pages = json.page.totalPages
@@ -204,7 +203,7 @@ function showEvents(json, pages) {
     //console.log(obj);
     $("#results").html(" ")
     sn = infoArr[5] * 30;
-    console.log("=====>" + sn);
+    //console.log("=====>" + sn);
     obj.forEach(function(arrayItem, i) {
         arrayItem.name ? title = arrayItem.name : title = " ";
         arrayItem.classifications[0].genre ? genre = arrayItem.classifications[0].genre.name : genre = " ";
@@ -352,7 +351,7 @@ function initMap(position, json) {
         json.page.totalElements > json.page.size ? count = json.page.size : count = json.page.totalElements;
     else
         count = json.page.totalElements % 15
-    console.log(count);
+    //console.log(count);
     for (var i = 0; i < count; i++) {
         addMarker(map, json._embedded.events[i], i);
     }
@@ -362,7 +361,7 @@ var string=[]
 var counter=0;
 function addMarker(map, event, i) {
 
-    console.log(event);
+    // console.log(event);
     var position=`${event._embedded.venues[0].location.latitude},${event._embedded.venues[0].location.longitude}`
     var place=markers.indexOf(position)
     if(place==-1){
@@ -394,7 +393,7 @@ function addMarker(map, event, i) {
 }
 
 function userlocation(map) {
-    console.log(latlng);
+    //console.log(latlng);
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(latlng.lat, latlng.lng),
         animation: google.maps.Animation.DROP,
@@ -424,7 +423,7 @@ function addEvent(e) {
         var genre = information[6].firstChild.data
         var segment = information[7].firstChild.data
         var subGenre = information[8].firstChild.data
-        console.log(pk + image + date + time + title + address + genre + segment + subGenre);
+        //console.log(pk + image + date + time + title + address + genre + segment + subGenre);
 
         axios.post(baseURL, {
                 "id": pk,
