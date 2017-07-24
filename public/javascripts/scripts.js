@@ -6,9 +6,8 @@ var isitclicked = false;
 function mapInitialize() {
     myMap(40.7400245, -73.9897259, 10);
 }
-var markers = []
-var infoArr = []
-
+var infoArr = [];
+var markers =[];
 // attaching the btn to the function
 //I did not make it inline function 
 //because I need to call the function 
@@ -229,7 +228,7 @@ function showEvents(json, pages) {
             subGenre = " ";
         ++sn
         $("#results").append(
-            `<div id=card${i} class="card hoverable z-depth-5 col s6">
+            `<div id=card${i+1} class="card hoverable z-depth-5 col s6">
             <div class="fixed-action-btn   horizontal">
                 <a class="btn-floating  btn-large pulse red">
                     <i class="large material-icons">shop</i>
@@ -359,15 +358,29 @@ function initMap(position, json) {
     }
     userlocation(map);
 }
-
+var string=[]
+var counter=0;
 function addMarker(map, event, i) {
+
     console.log(event);
+    var position=`${event._embedded.venues[0].location.latitude},${event._embedded.venues[0].location.longitude}`
+    var place=markers.indexOf(position)
+    if(place==-1){
+    string[counter]="";
+    markers.push(position);
+    ++counter;
+    
+    }
+    var place=markers.indexOf(position)
+    string[place]+=`<li class="mapBullet"><a href=#card${i+1}>${event.name}</a></li>`;
+
+
     var marker = new google.maps.Marker({
         position: new google.maps.LatLng(event._embedded.venues[0].location.latitude, event._embedded.venues[0].location.longitude),
         animation: google.maps.Animation.DROP,
         map: map
     });
-     var contentString = `<a href=#card${i}>${event.name}</a>`;
+     var contentString = string[place] ;
      var infowindow = new google.maps.InfoWindow({
           content: contentString,
           maxWidth: 200
