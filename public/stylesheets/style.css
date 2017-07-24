@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Kadwa:700');
 @import url('https://fonts.googleapis.com/css?family=Kalam:700');
+@import url('https://fonts.googleapis.com/css?family=EB+Garamond');
 body {
   padding: 50px;
    }
@@ -53,11 +53,11 @@ h3{
   height: 100%; 
 }
 
-.card-title{
-  height: 70px;
+.card .card-title{
+  height: auto;
   position: relative;
-  overflow: scroll;
-  
+  font-size: 20px;
+  font-family: 'EB Garamond', serif;
 }
 
 .cardcont
@@ -73,6 +73,7 @@ h3{
 p{
   padding-left: 2%;
   line-height: 30px;
+  font-family: 'EB Garamond', serif;
 }
 
 .card{
@@ -115,6 +116,9 @@ h6{
 
 th{
   text-align: center;
+  vertical-align : top;
+  padding: 0;
+  margin: 0;
 }
 td{
   white-space: pre-wrap; 
@@ -124,6 +128,7 @@ th{
   white-space: pre-wrap; 
   max-width: 100px
 }
+
 
 #facebook{
     z-index: 100;
@@ -138,10 +143,18 @@ th{
   padding: 30px;
 }
 
+@media only screen and (max-width: 500px) {
+
+  .card .card-title{
+ 
+  font-size: 10px;
+  
+}
+  }
+
+
 /* Added for aesthetics */ 
 h2 {
-/*  font-weight: 600;
-  font-family: 'Kadwa', serif;*/
   color: #fff;
 font-size: 7em;
 font-weight: bold;

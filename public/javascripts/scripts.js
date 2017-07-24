@@ -256,24 +256,21 @@ function showEvents(json, pages) {
             </div>                
             <div class=" grey lighten-3 card-reveal">
                 <span class="card-title grey-text text-darken-4 info_${id} " >${title}<i class="material-icons right">close</i></span>
-                <table>
-                    <tr>
-                        <th >Address:</th>
-                        <td class="info_${id}" >${street},${city},${zip}</td>
-                    </tr>
-                    <tr>
-                        <th>Information:</th>
-                        <td>${info}</td>
-                    </tr>
-                    <tr>
-                        <th>Price:</th>
-                        <td>${max}${min}</td>
-                    </tr>
-                    <tr>
-                        <th>Category:</th>
-                        <td ><div class="chip info_${id}">${genre}</div><div class="chip info_${id}">${segment}</div><div class="chip info_${id}">${subGenre}</div></td>
-                    </tr>
-                </table>
+                
+                    
+                        <h6 >Address:</h6>
+                        <p class="info_${id}" >${street},${city},${zip}</p>
+                    
+                        <h6>Information:</h6>
+                        <p>${info}</p>
+                   
+                        <h6>Price:</h6>
+                        <p>${max}${min}</p>
+                   
+                        <h6>Category:</h6>
+                        <p ><div class="chip info_${id}">${genre}</div><div class="chip info_${id}">${segment}</div><div class="chip info_${id}">${subGenre}</div></p>
+                    
+                
             </div>
         </div> `)
     });
@@ -372,12 +369,12 @@ function addMarker(map, event, i) {
         animation: google.maps.Animation.DROP,
         map: map
     });
-    marker.addListener('click', function() {
-        map.setZoom(10);
-        map.setCenter(marker.getPosition());
-        window.location.href = `#card${i}`;
-        $(`#card${i}`).effect("shake");
-    });
+    // marker.addListener('click', function() {
+    //     map.setZoom(10);
+    //     map.setCenter(marker.getPosition());
+    //     window.location.href = `#card${i}`;
+    //     $(`#card${i}`).effect("shake");
+    // });
 
     marker.setIcon('https://maps.google.com/mapfiles/ms/icons/red-dot.png');
 
