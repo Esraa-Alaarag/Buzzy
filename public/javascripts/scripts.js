@@ -228,7 +228,6 @@ function showEvents(json, pages) {
         if (subGenre === "Undefined")
             subGenre = " ";
         ++sn
-        console.log("=====>" + arrayItem.url);
         $("#results").append(
             `<div id=card${i} class="card hoverable z-depth-5 col s6">
             <div class="fixed-action-btn   horizontal">
@@ -368,12 +367,14 @@ function addMarker(map, event, i) {
         animation: google.maps.Animation.DROP,
         map: map
     });
-    // marker.addListener('click', function() {
-    //     map.setZoom(10);
-    //     map.setCenter(marker.getPosition());
-    //     window.location.href = `#card${i}`;
-    //     $(`#card${i}`).effect("shake");
-    // });
+     var contentString = `<a href=#card${i}>${event.name}</a>`;
+     var infowindow = new google.maps.InfoWindow({
+          content: contentString,
+          maxWidth: 200
+        });
+      marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
 
     marker.setIcon('https://maps.google.com/mapfiles/ms/icons/red-dot.png');
 
