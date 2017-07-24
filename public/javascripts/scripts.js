@@ -285,10 +285,10 @@ function showEvents(json, pages) {
 function Pagination(pages) {
     let i, blocks;
     blocks = `<br><ul class="pagination">
-    <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_left</i></a></li>`
+    <li class="waves-effect"><i class="material-icons">chevron_left</i></li>`
     for (i = 0; i < pages; i++)
         blocks += `<li class="waves-effect"><a onclick="getevents(${i})" href="#!">${i+1}</a></li>`
-    blocks += `<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    blocks += `<li class="waves-effect"><i class="material-icons">chevron_right</i></li>
   </ul>`
     return blocks;
 
@@ -318,7 +318,6 @@ function myMap(latitude, longitude, zoom) {
         var marker = new google.maps.Marker({
             position: latlng,
             map: map,
-            //draggable: true,
             animation: google.maps.Animation.DROP,
         });
         marker.addListener('click', toggleBounce);
