@@ -33,7 +33,7 @@ Step 1: The user enters an address or click to let the app finds his location.
 
 Step 2: The app displays a map with user's location and the surrounding events around that location. 
 
-Step 3: The user can click on save event to save the event that he is interested in.
+Step 3: The user can click on save event to save the event that s/he is interested in.
 
 Step 4: The user can see the saved events in my events page.
 
@@ -73,7 +73,8 @@ Step 6:The user can search the events based on event's Category.
 - As a user, I want to be able to share the events on social media.
 - As a user, I want to know how many events the search generates for me.
 - As a user , I want to be able the events arranged in pages where the maximum number of events in one page = 15 events.
-- As s user , I want the app to tell me if I want to add already added event
+- As s user , I want the app to tell me if I want to add already added event.
+- As a user, I want to be able click a button to reset my search.- As a user, I want when I click a location on map to see a list of activates in that place.- As a user, I want to be able when I click on the any activity on the map to go to the card of this certain activity   
 
 <a name="wireframesweb"> 
 
